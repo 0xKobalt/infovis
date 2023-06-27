@@ -18,52 +18,21 @@ Traceback (most recent call last):
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
-bevolking_mannen = bevolking[['Perioden', 'Leeftijd', 'Mannen']]
-bevolking_vrouwen = bevolking[['Perioden', 'Leeftijd', 'Vrouwen']]
-
-bevolking_mannen = bevolking_mannen[bevolking_mannen['Mannen'] != '.']
-bevolking_vrouwen = bevolking_vrouwen[bevolking_vrouwen['Vrouwen'] != '.']
-
-bevolking_mannen['Mannen'] = pd.to_numeric(bevolking_mannen['Mannen'])
-bevolking_mannen['Mannen'] = - bevolking_mannen['Mannen']
-
-beschikbare_jaren = result['Perioden'].unique()
-
-geselecteerd_jaar = input(f"Geef een jaar (beschikbare jaren: {', '.join(map(str, beschikbare_jaren))}): ")
-
-bevolking_mannen = bevolking_mannen[bevolking_mannen['Perioden'] == int(geselecteerd_jaar)]
-bevolking_vrouwen = bevolking_vrouwen[bevolking_vrouwen['Perioden'] == int(geselecteerd_jaar)]
-
-fig = go.Figure()
-
-fig.add_trace(go.Bar(y=bevolking_mannen['Leeftijd'], x=bevolking_mannen['Mannen'], orientation='h', name='Mannen'))
-fig.add_trace(go.Bar(y=bevolking_vrouwen['Leeftijd'], x=bevolking_vrouwen['Vrouwen'], orientation='h', name='Vrouwen'))
-
-fig.update_layout(barmode='overlay', title_text=f'Bevolkingspiramide {geselecteerd_jaar}', xaxis_title='Fig. 1. De bevolkingspiramide van Nederland', yaxis_title='Leeftijd')
-
-fig.show()
+import pandas as pd
+import plotly.express as px
+import plotly.graph_objects as go
+import matplotlib.pyplot as plt
+import json
+from ipywidgets import interact, IntSlider
 ------------------
 
 
 [0;31m---------------------------------------------------------------------------[0m
-[0;31mStdinNotImplementedError[0m                  Traceback (most recent call last)
-Cell [0;32mIn[3], line 12[0m
-[1;32m      8[0m bevolking_mannen[[38;5;124m'[39m[38;5;124mMannen[39m[38;5;124m'[39m] [38;5;241m=[39m [38;5;241m-[39m bevolking_mannen[[38;5;124m'[39m[38;5;124mMannen[39m[38;5;124m'[39m]
-[1;32m     10[0m beschikbare_jaren [38;5;241m=[39m result[[38;5;124m'[39m[38;5;124mPerioden[39m[38;5;124m'[39m][38;5;241m.[39munique()
-[0;32m---> 12[0m geselecteerd_jaar [38;5;241m=[39m [38;5;28;43minput[39;49m[43m([49m[38;5;124;43mf[39;49m[38;5;124;43m"[39;49m[38;5;124;43mGeef een jaar (beschikbare jaren: [39;49m[38;5;132;43;01m{[39;49;00m[38;5;124;43m'[39;49m[38;5;124;43m, [39;49m[38;5;124;43m'[39;49m[38;5;241;43m.[39;49m[43mjoin[49m[43m([49m[38;5;28;43mmap[39;49m[43m([49m[38;5;28;43mstr[39;49m[43m,[49m[38;5;250;43m [39;49m[43mbeschikbare_jaren[49m[43m)[49m[43m)[49m[38;5;132;43;01m}[39;49;00m[38;5;124;43m): [39;49m[38;5;124;43m"[39;49m[43m)[49m
-[1;32m     14[0m bevolking_mannen [38;5;241m=[39m bevolking_mannen[bevolking_mannen[[38;5;124m'[39m[38;5;124mPerioden[39m[38;5;124m'[39m] [38;5;241m==[39m [38;5;28mint[39m(geselecteerd_jaar)]
-[1;32m     15[0m bevolking_vrouwen [38;5;241m=[39m bevolking_vrouwen[bevolking_vrouwen[[38;5;124m'[39m[38;5;124mPerioden[39m[38;5;124m'[39m] [38;5;241m==[39m [38;5;28mint[39m(geselecteerd_jaar)]
+[0;31mModuleNotFoundError[0m                       Traceback (most recent call last)
+Cell [0;32mIn[1], line 6[0m
+[1;32m      4[0m [38;5;28;01mimport[39;00m [38;5;21;01mmatplotlib[39;00m[38;5;21;01m.[39;00m[38;5;21;01mpyplot[39;00m [38;5;28;01mas[39;00m [38;5;21;01mplt[39;00m
+[1;32m      5[0m [38;5;28;01mimport[39;00m [38;5;21;01mjson[39;00m
+[0;32m----> 6[0m [38;5;28;01mfrom[39;00m [38;5;21;01mipywidgets[39;00m [38;5;28;01mimport[39;00m interact, IntSlider
 
-File [0;32m~/miniconda3/envs/jupyterbook/lib/python3.11/site-packages/ipykernel/kernelbase.py:1190[0m, in [0;36mKernel.raw_input[0;34m(self, prompt)[0m
-[1;32m   1188[0m [38;5;28;01mif[39;00m [38;5;129;01mnot[39;00m [38;5;28mself[39m[38;5;241m.[39m_allow_stdin:
-[1;32m   1189[0m     msg [38;5;241m=[39m [38;5;124m"[39m[38;5;124mraw_input was called, but this frontend does not support input requests.[39m[38;5;124m"[39m
-[0;32m-> 1190[0m     [38;5;28;01mraise[39;00m StdinNotImplementedError(msg)
-[1;32m   1191[0m [38;5;28;01mreturn[39;00m [38;5;28mself[39m[38;5;241m.[39m_input_request(
-[1;32m   1192[0m     [38;5;28mstr[39m(prompt),
-[1;32m   1193[0m     [38;5;28mself[39m[38;5;241m.[39m_parent_ident[[38;5;124m"[39m[38;5;124mshell[39m[38;5;124m"[39m],
-[1;32m   1194[0m     [38;5;28mself[39m[38;5;241m.[39mget_parent([38;5;124m"[39m[38;5;124mshell[39m[38;5;124m"[39m),
-[1;32m   1195[0m     password[38;5;241m=[39m[38;5;28;01mFalse[39;00m,
-[1;32m   1196[0m )
-
-[0;31mStdinNotImplementedError[0m: raw_input was called, but this frontend does not support input requests.
+[0;31mModuleNotFoundError[0m: No module named 'ipywidgets'
 
